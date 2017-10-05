@@ -1,0 +1,41 @@
+.puzzle-pannel {
+    width: 300px;
+    height: 300px;
+    text-align: center;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.grid {
+    background-color: #ff8321;
+    border: 1px solid #993ff1;
+    width: 300px;
+    height: 300px;
+    text-align: center;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.row {
+    height: 33.333333%;
+}
+
+.cell {
+    width: 32.3333333%;
+    height: 100%;
+    float: left;
+    text-align: center;
+    position:relative;
+}
+
+.cell input {
+    background-color: #ff8321;
+    border: 0;
+    display: block;
+    width: 100%;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    transform: translateY(70%);
+    text-align: center;
+}
