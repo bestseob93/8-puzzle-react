@@ -28,3 +28,19 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.puzzle-group {
+  width: 100%;
+  height: 350px;
+}
+
+.solve {
+  margin-top: 100px;
+  width: 100px;
+  border: 1px solid black;
+  background-color: yellow;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px;
+  cursor: pointer;
+}

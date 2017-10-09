@@ -2,8 +2,10 @@
     width: 300px;
     height: 300px;
     text-align: center;
-    width: 50%;
+    width: 45%;
+    display: inline-block;
     margin: 0 auto;
+    vertical-align: middle;
 }
 
 .grid {
@@ -16,26 +18,67 @@
     margin: 0 auto;
 }
 
+.grid-goal {
+    background-color: #3ff143;
+    border: 1px solid #993ff1;
+    width: 300px;
+    height: 300px;
+    text-align: center;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
 .row {
     height: 33.333333%;
+    margin: 0 auto;
+    padding: 0;
+    border: 0;
 }
 
 .cell {
-    width: 32.3333333%;
+    width: 32.666%;
+    padding: 0;
+    margin: 0 auto;
     height: 100%;
     float: left;
+    border: 1px solid gold;
     text-align: center;
-    position:relative;
+    position: relative;
+}
+
+.cell-goal {
+    width: 32.666%;
+    padding: 0;
+    margin: 0 auto;
+    height: 100%;
+    float: left;
+    border: 1px solid gold;
+    text-align: center;
+    position: relative;
+}
+
+.cell-goal input {
+    background-color: #3ff143;
+    border: 0;
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    transform: translateY(100%);
+    text-align: center;
 }
 
 .cell input {
     background-color: #ff8321;
     border: 0;
     display: block;
-    width: 100%;
+    width: 80%;
+    margin: 0 auto;
     font-size: 24px;
     font-weight: bold;
     color: white;
-    transform: translateY(70%);
+    transform: translateY(100%);
     text-align: center;
 }
