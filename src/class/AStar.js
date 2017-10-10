@@ -1,4 +1,5 @@
 import PriorityQueue from 'js-priority-queue';
+import HashSet from '../utils/HashSet';
 
 export function Node(value, state, emptyRow, emptyCol, depth) {
     this.value = value;
@@ -24,13 +25,14 @@ export function Node(value, state, emptyRow, emptyCol, depth) {
     this.size = this.state.length;
 }
 
-Array.prototype.clone = () => {
-    return JSON.parse(JSON.stringify(this));
+function cloneArray(a) {
+    
+    return JSON.parse(JSON.stringify(a));
 }
 
-Array.prototype.contains = (x) => {
-    for (let i = 0; i < this.length; i++) {
-        if (this[i] === x) {
+function isContain(a, x) {
+    for (let i = 0; i < a.length; i++) {
+        if (a[i] === x) {
             return true;
         }
     }
@@ -50,6 +52,8 @@ export class AStar {
                 return -1;
             return 0;
         }});
+        this.queue.queue(initial);
+        this.visited = new HashSet();
     }
 
     heuristic = (node) => {
@@ -111,8 +115,8 @@ export class AStar {
         let tilesRelated = [];
 
         // Loop foreach pair of elements in the row/column
-        for(let h = 0; h < state.length - 1 && !tilesRelated.contains(h); h++) {
-            for(let k = h + 1; k < state.length && !tilesRelated.contains(h); k++) {
+        for(let h = 0; h < state.length - 1 && !isContain(tilesRelated, h); h++) {
+            for(let k = h + 1; k < state.length && !isContain(tilesRelated, h); k++) {
                 let moves = dimension === 1 
                     ? this.inConflict(i, state[i][h], state[i][k], h, k, dimension) 
                     : this.inConflict(i, state[h][i], state[k][i], h, k, dimension);
@@ -133,7 +137,7 @@ export class AStar {
         let indexGoalB = -1;
 
         for(let c = 0; c < this.goal.state.length; c++) {
-            if (dimension == 1 && this.goal.state[index][c] === a) {
+            if (dimension === 1 && this.goal.state[index][c] === a) {
                 indexGoalA = c;
             } else if (dimension === 1 && this.goal.state[index][c] === b) {
                 indexGoalB = c;
@@ -153,14 +157,18 @@ export class AStar {
 
     execute = () => {
         // Add current state to visited list
-		this.visited.add(this.initial.strRepresentation);
-			
+        console.log(this.visited);
+        console.log(this.initial);
+        this.visited.add(this.initial.strRepresentation);
+        console.log('----execute----');
+		console.log(this.queue);
 		while (this.queue.length > 0) {
-		    let current = this.queue.dequeue();
+            let current = this.queue.dequeue();
+            console.log(current);
 			if(current.strRepresentation === this.goal.strRepresentation) {
                 return current;
-            }	
-			this.expandNode(current);
+            }
+            this.expandNode(current);
 		}
     }
 
@@ -171,15 +179,19 @@ export class AStar {
         let row = node.emptyRow;
         let newNode = '';
         
+
+        console.log(col);
+        console.log(row);
         // Up
         if (row > 0) {
-            newState = node.state.clone();
+            newState = cloneArray(node.state);
+            console.log(newState);
             temp = newState[row - 1][col];
             newState[row - 1][col] = this.empty;
             newState[row][col] = temp;
             newNode = new Node(0, newState, row - 1, col,  node.depth + 1);
             
-            if (!this.visited.contains(newNode.strRepresentation)) {
+            if (!isContain(this.visited, newNode.strRepresentation)) {
                 newNode.value = newNode.depth + this.heuristic(newNode);
                 newNode.path = node.path + "U";
                 this.queue.queue(newNode);
@@ -189,13 +201,14 @@ export class AStar {
         
         // Down
         if (row < node.size - 1) {
-            newState = node.state.clone();
+            newState = cloneArray(node.state);
+            console.log(newState);
             temp = newState[row + 1][col];
             newState[row + 1][col] = this.empty;
             newState[row][col] = temp;
             newNode = new Node(0, newState, row + 1, col,  node.depth + 1);
             
-            if (!this.visited.contains(newNode.strRepresentation)) {
+            if (!isContain(this.visited, newNode.strRepresentation)) {
                 newNode.value = newNode.depth + this.heuristic(newNode);
                 newNode.path = node.path + "D";
                 this.queue.queue(newNode);
@@ -205,13 +218,14 @@ export class AStar {
         
         // Left
         if (col > 0) {
-            newState = node.state.clone();
+            newState = cloneArray(node.state);
+            console.log(newState);
             temp = newState[row][col - 1];
             newState[row][col - 1] = this.empty;
             newState[row][col] = temp;
             newNode = new Node(0, newState, row, col - 1, node.depth + 1);
             
-            if (!this.visited.contains(newNode.strRepresentation)) {
+            if (!isContain(this.visited, newNode.strRepresentation)) {
                 newNode.value = newNode.depth + this.heuristic(newNode);
                 newNode.path = node.path + "L";
                 this.queue.queue(newNode);
@@ -221,13 +235,14 @@ export class AStar {
 
         // Right
         if (col < node.size - 1) {
-            newState = node.state.clone();
+            newState = cloneArray(node.state);
+            console.log(newState);
             temp = newState[row][col + 1];
             newState[row][col + 1] = this.empty;
             newState[row][col] = temp;
             newNode = new Node(0, newState, row, col + 1, node.depth + 1);
                 
-            if (!this.visited.contains(newNode.strRepresentation)) {
+            if (!isContain(this.visited, newNode.strRepresentation)) {
                 newNode.value = newNode.depth + this.heuristic(newNode);
                 newNode.path = node.path + "R";
                 this.queue.queue(newNode);

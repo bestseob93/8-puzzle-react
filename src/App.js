@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Puzzle from './components/Puzzle';
-import { AStar } from './class/AStar';
+import { Node, AStar } from './class/AStar';
 
 class App extends Component {
   constructor(props) {
@@ -11,30 +11,60 @@ class App extends Component {
       initSetted: false,
       initState: [],
       goalState: [],
-      isReady: false
+      isReady: false,
+      emptyPosition: {
+        init: [],
+        goal: []
+      },
+      result: null
     };
   }
 
-  handleInit = (isGoal, state) => {
+  handleInit = (isGoal, state, emptyPosition) => {
     console.log(isGoal);
     console.log(state);
+    console.log(emptyPosition);
     if(isGoal) {
       this.setState({
         goalState: state,
-        isReady: true
-      });  
+        isReady: true,
+        emptyPosition: {
+          init: this.state.emptyPosition.init,
+          goal: emptyPosition
+        }
+      });
     } else {
       this.setState({
         initSetted: true,
-        initState: state
+        initState: state,
+        emptyPosition: {
+          init: emptyPosition,
+          goal: this.state.emptyPosition.goal
+        }
       });
     }
 
   }
 
   solveStart = () => {
-    let starAI = new AStar(this.state.initState, this.state.goalState, null);
-    console.log(starAI);
+    console.log(this.state);
+    const init = new Node(0, this.state.initState, this.state.emptyPosition.init[0], this.state.emptyPosition.init[1], 0);
+    const goal = new Node(0, this.state.goalState, this.state.emptyPosition.goal[0], this.state.emptyPosition.goal[1], 0);
+    
+    const starAI = new AStar(init, goal, 0);
+    // To measure time taken by the algorithm
+    let startTime = new Date();
+    // Execute AStar
+    let result = starAI.execute();
+    // To measure time taken by the algorithm
+    let endTime = new Date();
+    alert('Completed in: ' + (endTime - startTime) + ' milliseconds');
+    
+    this.setState({
+      result
+    });
+    let solution = result;
+    console.log(solution);
   }
 
   render() {

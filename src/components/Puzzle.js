@@ -42,13 +42,29 @@ class Puzzle extends Component {
     }
 
     handleInitBtnPress = () => {
-        const initState = [[this.state.value_0, this.state.value_1, this.state.value_2], [this.state.value_3, this.state.value_4, this.state.value_5], [this.state.value_6, this.state.value_7, this.state.value_8]];
-        this.props.handleInit(this.props.isGoal, initState);
+        const initState = [[parseInt(this.state.value_0), parseInt(this.state.value_1), parseInt(this.state.value_2)], [parseInt(this.state.value_3), parseInt(this.state.value_4), parseInt(this.state.value_5)], [parseInt(this.state.value_6), parseInt(this.state.value_7), parseInt(this.state.value_8)]];
+        let emptyPosition = [];
+        for(let i=0; i<initState.length; i++) {
+            for(let j=0; j<initState[i].length; j++) {
+                if(initState[i][j] === 0) {
+                    emptyPosition = [i, j];
+                }
+            }
+        }
+        this.props.handleInit(this.props.isGoal, initState, emptyPosition);
     }
 
     handleGoalBtnPress = () => {
-        const goalState = [[this.state.value_0, this.state.value_1, this.state.value_2], [this.state.value_3, this.state.value_4, this.state.value_5], [this.state.value_6, this.state.value_7, this.state.value_8]];
-        this.props.handleInit(this.props.isGoal, goalState);     
+        const goalState = [[parseInt(this.state.value_0), parseInt(this.state.value_1), parseInt(this.state.value_2)], [parseInt(this.state.value_3), parseInt(this.state.value_4), parseInt(this.state.value_5)], [parseInt(this.state.value_6), parseInt(this.state.value_7), parseInt(this.state.value_8)]];
+        let emptyPosition = [];
+        for(let i=0; i<goalState.length; i++) {
+            for(let j=0; j<goalState[i].length; j++) {
+                if(goalState[i][j] === 0) {
+                    emptyPosition = [i, j];
+                }
+            }
+        }
+        this.props.handleInit(this.props.isGoal, goalState, emptyPosition);    
     }
 
     render() {
