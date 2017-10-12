@@ -155,7 +155,7 @@ class PuzzleGoal extends Component {
                     this.props.initSetted ? undefined :
                     <button
                         type="button"
-                        style={{marginTop: 50}}
+                        style={{marginTop: 30, zIndex: 999}}
                         onClick={ this.props.isGoal ? this.handleGoalBtnPress : this.handleInitBtnPress }
                         disabled={this.state.valueSetted}
                     >

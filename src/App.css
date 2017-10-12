@@ -4,6 +4,14 @@
   margin: 0 auto;
 }
 
+@media screen and (max-width: 768px) {
+  .App {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+  }
+}
+
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
@@ -36,8 +44,12 @@
 
 .solve {
   margin-top: 100px;
-  width: 100px;
-  border: 1px solid black;
+  position: fixed;
+  bottom: 30px;
+  width: 100%;
+  left: 0;
+  right: 0;
+  border: 0;
   background-color: yellow;
   font-size: 20px;
   font-weight: bold;

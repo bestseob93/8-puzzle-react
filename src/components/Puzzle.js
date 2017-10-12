@@ -302,7 +302,7 @@ class Puzzle extends Component {
                     셋팅 완료
                     </button>
                 }
-                { this.props.isReady ? <button className="solution" onClick={this.showSolution}>해결방법</button> : undefined }
+                { this.props.isReady ? <button className="solution" onClick={this.showSolution}>결과보기</button> : undefined }
             </div>
         );
     }
