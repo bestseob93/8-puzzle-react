@@ -41,7 +41,6 @@
     margin: 0 auto;
     height: 100%;
     float: left;
-    border: 1px solid gold;
     text-align: center;
     position: relative;
 }
@@ -52,7 +51,6 @@
     margin: 0 auto;
     height: 100%;
     float: left;
-    border: 1px solid gold;
     text-align: center;
     position: relative;
 }
@@ -80,5 +78,18 @@
     font-weight: bold;
     color: white;
     transform: translateY(100%);
+    text-align: center;
+}
+
+.solution {
+    display: block;
+    width: 100%;
+    background-color: #ff8321;
+    color: white;
+    bottom: 0;
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: 30px;
     text-align: center;
 }

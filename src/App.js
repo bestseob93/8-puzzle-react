@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import $ from 'jquery';
 import './App.css';
 import Puzzle from './components/Puzzle';
+import PuzzleGoal from './components/PuzzleGoal';
 import { Node, AStar } from './class/AStar';
 
 class App extends Component {
@@ -16,14 +18,12 @@ class App extends Component {
         init: [],
         goal: []
       },
-      result: null
+      result: null,
+      divArr: [],
     };
   }
 
-  handleInit = (isGoal, state, emptyPosition) => {
-    console.log(isGoal);
-    console.log(state);
-    console.log(emptyPosition);
+  handleInit = (isGoal, state, emptyPosition, divArr) => {
     if(isGoal) {
       this.setState({
         goalState: state,
@@ -40,7 +40,8 @@ class App extends Component {
         emptyPosition: {
           init: emptyPosition,
           goal: this.state.emptyPosition.goal
-        }
+        },
+        divArr
       });
     }
 
@@ -55,20 +56,21 @@ class App extends Component {
     // To measure time taken by the algorithm
     let startTime = new Date();
     // Execute AStar
-    let result = starAI.execute();
+    let result = starAI.execute(this.state.divArr);
     // To measure time taken by the algorithm
     let endTime = new Date();
     alert('Completed in: ' + (endTime - startTime) + ' milliseconds');
-    
+    console.log(result);
     this.setState({
       result
     });
-    let solution = result;
-    console.log(solution);
   }
 
   render() {
-    console.log(this.state);
+
+    console.log('movePosition');
+    console.log(this.state.result);
+    const { result } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -82,8 +84,10 @@ class App extends Component {
             isGoal={false}
             initSetted={this.state.initSetted}
             handleInit={this.handleInit}
+            resultPath={result !== null ? result !== undefined ? result.path : '' : ''}
+            isReady={this.state.isReady}
           />
-          { this.state.initSetted ? <Puzzle isGoal={true} handleInit={this.handleInit} /> : undefined }
+          { this.state.initSetted ? <PuzzleGoal isGoal={true} handleInit={this.handleInit} /> : undefined }
           <div className="btn-group">
             { this.state.isReady ? <button className="solve" onClick={this.solveStart}>시작</button> : undefined }
           </div>
