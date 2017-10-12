@@ -53,13 +53,13 @@ class App extends Component {
     const goal = new Node(0, this.state.goalState, this.state.emptyPosition.goal[0], this.state.emptyPosition.goal[1], 0);
     
     const starAI = new AStar(init, goal, 0);
-    // To measure time taken by the algorithm
+    // 함수 실행 시간 계산하기
     let startTime = new Date();
-    // Execute AStar
-    let result = starAI.execute(this.state.divArr);
-    // To measure time taken by the algorithm
+    // 실행
+    let result = starAI.execute();
+
     let endTime = new Date();
-    alert('Completed in: ' + (endTime - startTime) + ' milliseconds');
+    alert('걸린시간: ' + (endTime - startTime) + ' ms');
     console.log(result);
     this.setState({
       result

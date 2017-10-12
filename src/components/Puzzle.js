@@ -60,10 +60,7 @@ class Puzzle extends Component {
                     emptyPosition = [i, j];
                     this.emptytilePosRow = i;
                     this.emptytilePosCol = j;
-                    this.setState({
-                        emptytilePosRow: i,
-                        emptytilePosCol: j
-                    });
+
                     for(let k=0; k<divArr.length; k++) {
                         if(divArr[k].dataset.pos === i + "," + j) {
                             divArr[k].id = "empty";
@@ -76,19 +73,6 @@ class Puzzle extends Component {
         this.props.handleInit(this.props.isGoal, initState, emptyPosition, divArr);
     }
 
-    handleGoalBtnPress = () => {
-        const goalState = [[parseInt(this.state.value_0), parseInt(this.state.value_1), parseInt(this.state.value_2)], [parseInt(this.state.value_3), parseInt(this.state.value_4), parseInt(this.state.value_5)], [parseInt(this.state.value_6), parseInt(this.state.value_7), parseInt(this.state.value_8)]];
-        let emptyPosition = [];
-        for(let i=0; i<goalState.length; i++) {
-            for(let j=0; j<goalState[i].length; j++) {
-                if(goalState[i][j] === 0) {
-                    emptyPosition = [i, j];
-                }
-            }
-        }
-        this.props.handleInit(this.props.isGoal, goalState, emptyPosition, null);    
-    }
-
     moveTile = (divRef, move) => {
         let pos = $(divRef).attr('data-pos');
         if(pos !== undefined) {
@@ -96,7 +80,7 @@ class Puzzle extends Component {
             let posCol = parseInt(pos.split(',')[1]);
 
 
-            const cellDisplacement = 100;
+            const cellDisplacement = 99;
             // Move Up
             if (posRow + 1 === this.emptytilePosRow && posCol === this.emptytilePosCol) {
                 $(divRef).animate({

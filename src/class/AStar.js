@@ -24,12 +24,12 @@ export function Node(value, state, emptyRow, emptyCol, depth) {
     this.strRepresentation = "";
     this.path = "";
     
-    // String representation of the state in CSV format
+    // 상태 표시
     for (let i = 0; i < state.length; i++) {
-        // We assume the state is a square
+        // 정사각형 체크
         if (state[i].length !== state.length) {
-            alert('Number of rows differs from number of columns')
-            return false
+            alert('행 열 값이 다릅니다');
+            return false;
         }
         for (let j = 0; j < state[i].length; j++) {
             this.strRepresentation += state[i][j] + ",";
@@ -92,23 +92,6 @@ export class AStar {
         return result;
     }
 
-    linearConflicts = (node) => {
-        let result = 0;
-        let state = node.state;
-
-        // Row Conflicts
-        for(let i = 0; i < state.length; i++) {
-            result += this.findConflicts(state, i, 1);
-        }
-
-        // Column Conflicts
-        for(let i = 0; i < state[0].length; i++) {
-            result += this.findConflicts(state, i, 0);
-        }
-
-        return result;
-    }
-
     findConflicts = (state, i, dimension) => {
         let result = 0;
         let tilesRelated = [];
@@ -153,41 +136,43 @@ export class AStar {
                        ? 2
                        : 0;
     }
-    execute = (divRefs) => {
-        // Add current state to visited list
+    execute = () => {
+        // 현재 상태 닫힌 노드에 추가
 		this.visited.add(this.initial.strRepresentation);
-			
+        
+        // 큐 실행
 		while (this.queue.length > 0) {
 		    let current = this.queue.dequeue();
 			if(current.strRepresentation === this.goal.strRepresentation) {
                 return current;
             }	
-			this.expandNode(current, divRefs);
+			this.expandNode(current);
 		}
     }
 
-    expandNode = (node, divRefs) => {
+    expandNode = (node) => {
         let temp = '';
         let newState = '';
         let col = node.emptyCol;
         let row = node.emptyRow;
         let newNode = '';
+
         // Up
         if (row > 0) {
             newState = node.state.clone();
-            // console.log(node.state);
-            // console.log(newState);
             temp = newState[row - 1][col];
             newState[row - 1][col] = this.empty;
             newState[row][col] = temp;
             newNode = new Node(0, newState, row - 1, col,  node.depth + 1);
             
+            // 새 노드가 닫힌 노드에 존재하지 않을 때
             if (!this.visited.contains(newNode.strRepresentation)) {
                 newNode.value = newNode.depth + this.heuristic(newNode);
                 newNode.path = node.path + "U";
                 this.queue.queue(newNode);
                 this.visited.add(newNode.strRepresentation);
             }
+            // console.log(newNode);
         }
         
         // Down
@@ -204,6 +189,7 @@ export class AStar {
                 this.queue.queue(newNode);
                 this.visited.add(newNode.strRepresentation);
             }
+            // console.log(newNode);
         }
         
         // Left
@@ -220,6 +206,8 @@ export class AStar {
                 this.queue.queue(newNode);
                 this.visited.add(newNode.strRepresentation);
             }
+
+            // console.log(newNode);
         }
 
         // Right
@@ -236,6 +224,8 @@ export class AStar {
                 this.queue.queue(newNode);
                 this.visited.add(newNode.strRepresentation);
             }
+
+            // console.log(newNode);
         }
     }
 }
