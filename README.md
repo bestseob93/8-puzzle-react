@@ -1,3 +1,12 @@
 ## 8 Puzzle (A* Algorithm)
+A* Algorithm and manhattan distance
 
-react version
+
+## Start
+NodeJS should be installed
+
+```
+npm install or yarn
+npm start or yarn start
+```
+

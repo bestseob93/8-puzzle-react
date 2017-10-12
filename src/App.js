@@ -74,7 +74,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">8 퍼즐 맞추기</h1>
         </header>
         <p className="App-intro">
           {this.state.initSetted ? '목표 상태를 입력해주세요!' : '초기 상태를 입력해주세요!'}
